@@ -14,36 +14,47 @@ Software Student and Data Science student.
 
 class Student:
 
-    def __init__(self, name, age, id, tutor):
+    def __init__(self, name, age, id):
         self.name = name
         self.age = age
         self.id = id
         self.subjects = dict()
-        self.tutor = tutor
 
 
-class CFGStudent:
 
-    def __init__(self, full_name, specialisation, season, mark=True):
-        self.full_name = full_name
+class CFGStudent(Student):
+
+    def __init__(self, name, age, id, specialisation):
+        super(CFGStudent, self).__init__(name, age, id)
         self.specialisation = specialisation
-        self.season = season
-        self.mark = 70 if mark else 50
 
-    def add_subject(self):
-        print(f"{self.full_name} completed the {self.specialisation} cohort and achieved {self.mark}%.")
+    def add_subject(self, new_subject, grade):
+        self.subjects.update({new_subject: grade})
+        print(f"{self.name} has enrolled in the {new_subject} subject. Her new grade is {grade}.")
 
-    def remove_subject(self):
-        print(f"{self.full_name} was removed from the {self.specialisation} cohort because she was only getting {self.mark} in all her homework!")
+    def remove_subject(self, old_subject):
+        self.subjects.pop(old_subject)
+        print(f"{self.name} has been removed from the {old_subject} subject.")
 
-    # def view_all_subjects(self):
+    def view_all_subjects(self):
+        print(f"{self.name} is taking the following subjects:")
+        for subject in self.subjects:
+            print(subject)
 
-student_1 = CFGStudent("Lujein Nouelaty", "Software", "Autumn", True)
-student_1.add_subject()
-# for student_mark in sum(70):
-#     student_1.remove_subject()
+    def overall_grade(self):
+        total_grade = sum(self.subjects.values())
+        number_of_subjects = len(self.subjects)
+        average_grade = total_grade / number_of_subjects
+        return average_grade
 
 
 #     create new methods that manage student's subjects (add/remove new subject and its grade to the dict)
 #     create a method to view all subjects taken by a student
 #     create a method  (and a new variable) to get student's overall mark (use average)
+
+my_student = CFGStudent("Lujein Nouelaty", 32, 4567, "Software")
+my_student.add_subject("Python", 52)
+my_student.add_subject("SQL", 68)
+my_student.remove_subject("SQL")
+my_student.view_all_subjects()
+print(my_student.overall_grade())

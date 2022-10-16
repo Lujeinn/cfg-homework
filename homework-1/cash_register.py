@@ -14,67 +14,57 @@
 # #
 # # """
 
-
 class CashRegister:
 
-    def __init__(self, item_name, price, in_stock=True):
-        self.total_items = []
-        self.total_price = +-1
-        self.discount = 0 if price else "20%"
-        self.item_name = item_name
-        self.price = price
-        self.in_stock = in_stock
-        self.total_items.append({"item_name": self.item_name, "price": self.price, "in_stock": self.stock})
+    def __init__(self):
 
+        self.total_items = dict()
+        self.total_price = 0
+        self.discount = 0
 
+    def add_item(self, new_item, new_price):
+        self.total_items.update({new_item: new_price})
+        print(f"The {new_item} has been added to your cash register. ")
 
-    def add_items(self, new_item, new_price, in_stock):
-        self.total_items.append({"item_name": new_item, "price": new_price, "in_stock": in_stock})
+    def remove_item(self, old_item):
+        self.total_items.pop(old_item)
+        print(f"The {old_item} has been removed from your cash register. ")
 
+    def apply_discount(self, discount_percentage, min_spend):
+        if self.total_price >= min_spend:
+            self.discount = self.total_price * discount_percentage / 100
+            self.total_price = self.total_price - self.discount
+        else:
+            self.discount = 0
+        print(f"Price after discount: {self.total_price}.")
 
+    def get_total(self):
+        total = 0
+        for price in self.total_items.values():
+            total = total + price
+        self.total_price = total
+        return total
 
+    def show_items(self):
+        print(f"The items in the cash register are:")
+        for item in self.total_items:
+            print(item)
 
-item_1 = CashRegister("Earrings", 165, True)
-print(item_1.append)
+    def reset_register(self):
+        self.total_items.clear()
+        self.total_price = 0
+        self.discount = 0
+        print(f"Your cash register has been reset")
 
+# EXAMPLE code run:
 
-
-
-
-
-
-
-
-
-#     def add_item(self, new_item, new_price):
-#         self.total_items.append({"item": new_item, "price": new_price, "stock": stock"})
-#     #     print(f"Your item {self.item_name} has been added to your basket.")
-#     #
-#     # def remove_item(self):
-#     #     print(f"Your item {self.item_name} has been removed from your basket")
-#     #
-#     # def apply_discount(self):
-#     #     print(f"A discount of {self.discount} has been applied to your basket.")
-#     #
-#     # def get_total(self, price):
-#     #     self.total_price += price
-#     #     return self.total_price
-#     #
-#     # def show_items(self, total_items):
-#     #
-#     #
-#     # def reset_register(self):
-#
-#
-#
-# item_1 = CashRegister("earrings", "£165")
-# print(item_1.total_item)
-# # my_shop.remove_item()
-# # my_shop.get_total(165)
-# # for total in sum(range(50):
-# # my_shop.apply_discount()
-#
-#
-#
-
-
+my_cash_register = CashRegister()
+my_cash_register.add_item("Necklace", 200)
+my_cash_register.add_item("Bracelet", 350)
+my_cash_register.add_item("Earrings", 300)
+print(my_cash_register.get_total())
+my_cash_register.remove_item("Bracelet")
+my_cash_register.show_items()
+print(my_cash_register.get_total())
+my_cash_register.apply_discount(20, 400)
+my_cash_register.reset_register()
