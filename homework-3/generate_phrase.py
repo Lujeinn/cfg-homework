@@ -30,19 +30,14 @@ from collections import Counter
 def generate_phrase(characters, phrase):
     new_characters = characters.lower()
     new_phrase = phrase.lower()
-    char_counts = Counter(new_characters)
+    characters_counts = Counter(new_characters)
     phrase_counts = Counter(new_phrase)
-    return all(char_counts.get(char, 0) >= count for char, count in phrase_counts.items())
+    return all(characters_counts.get(characters, 0) >= count for characters, count in phrase_counts.items())
 
 
 print(generate_phrase('cbacba', 'aabbccc'))
-
 print(generate_phrase('tattooooeed', 'tatoo'))
-
 print(generate_phrase('goosegiraffebumps', 'giraffe'))
-
-print(generate_phrase('odeC stFir slrG', 'Code First Girls'))
-
+print(generate_phrase('maP yLSeeb', 'pam beeSLy'))
 print(generate_phrase('odeC stFir slrG', ""))
-
-print(generate_phrase('aheaollabbhb', 'hello'))
+print(generate_phrase('MichaelTheOfficeScott', 'Michael Scott'))
